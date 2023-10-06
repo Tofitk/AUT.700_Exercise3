@@ -1,0 +1,162 @@
+[0.000000] (-) TimerEvent: {}
+[0.000232] (turtlebot3_fake_node) JobQueued: {'identifier': 'turtlebot3_fake_node', 'dependencies': OrderedDict()}
+[0.000352] (turtlebot3_gazebo) JobQueued: {'identifier': 'turtlebot3_gazebo', 'dependencies': OrderedDict()}
+[0.000381] (turtlebot3_simulations) JobQueued: {'identifier': 'turtlebot3_simulations', 'dependencies': OrderedDict([('turtlebot3_fake_node', '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/turtlebot3_fake_node'), ('turtlebot3_gazebo', '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/turtlebot3_gazebo')])}
+[0.000415] (turtlebot3_fake_node) JobStarted: {'identifier': 'turtlebot3_fake_node'}
+[0.059339] (turtlebot3_gazebo) JobStarted: {'identifier': 'turtlebot3_gazebo'}
+[0.099026] (-) TimerEvent: {}
+[0.121799] (turtlebot3_fake_node) JobProgress: {'identifier': 'turtlebot3_fake_node', 'progress': 'cmake'}
+[0.123053] (turtlebot3_fake_node) JobProgress: {'identifier': 'turtlebot3_fake_node', 'progress': 'build'}
+[0.123925] (turtlebot3_fake_node) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/turtlebot3_fake_node', '--', '-j4', '-l4'], 'cwd': '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/turtlebot3_fake_node', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'topi'), ('LC_TIME', 'fi_FI.UTF-8'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/topi'), ('OLDPWD', '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'fi_FI.UTF-8'), ('SYSTEMD_EXEC_PID', '1581'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'topi'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'topi'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/topi-UX430UA:@/tmp/.ICE-unix/1559,unix/topi-UX430UA:/tmp/.ICE-unix/1559'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'fi_FI.UTF-8'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/76bde0e0_8944_460e_a9f2_05c3c47e1a02'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'fi_FI.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.P124B2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.348'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'fi_FI.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'fi_FI.UTF-8'), ('LC_IDENTIFICATION', 'fi_FI.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/turtlebot3_fake_node'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'fi_FI.UTF-8'), ('LC_PAPER', 'fi_FI.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.128815] (turtlebot3_gazebo) JobProgress: {'identifier': 'turtlebot3_gazebo', 'progress': 'cmake'}
+[0.129811] (turtlebot3_gazebo) Command: {'cmd': ['/usr/bin/cmake', '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/src/turtlebot3_simulations/turtlebot3_gazebo', '-DAMENT_CMAKE_SYMLINK_INSTALL=1', '-DCMAKE_INSTALL_PREFIX=/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/turtlebot3_gazebo'], 'cwd': '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/turtlebot3_gazebo', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'topi'), ('LC_TIME', 'fi_FI.UTF-8'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/topi'), ('OLDPWD', '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'fi_FI.UTF-8'), ('SYSTEMD_EXEC_PID', '1581'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'topi'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'topi'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/topi-UX430UA:@/tmp/.ICE-unix/1559,unix/topi-UX430UA:/tmp/.ICE-unix/1559'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'fi_FI.UTF-8'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/76bde0e0_8944_460e_a9f2_05c3c47e1a02'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'fi_FI.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.P124B2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.348'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'fi_FI.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'fi_FI.UTF-8'), ('LC_IDENTIFICATION', 'fi_FI.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/turtlebot3_gazebo'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'fi_FI.UTF-8'), ('LC_PAPER', 'fi_FI.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.145765] (turtlebot3_gazebo) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.194600] (turtlebot3_fake_node) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/turtlebot3_fake_node.dir/src/turtlebot3_fake_node.cpp.o\x1b[0m\n'}
+[0.199141] (-) TimerEvent: {}
+[0.299515] (-) TimerEvent: {}
+[0.346753] (turtlebot3_gazebo) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[0.376240] (turtlebot3_gazebo) StderrLine: {'line': b'\x1b[31mCMake Error at CMakeLists.txt:23 (find_package):\n'}
+[0.376602] (turtlebot3_gazebo) StderrLine: {'line': b'  By not providing "Findgazebo.cmake" in CMAKE_MODULE_PATH this project has\n'}
+[0.376818] (turtlebot3_gazebo) StderrLine: {'line': b'  asked CMake to find a package configuration file provided by "gazebo", but\n'}
+[0.377007] (turtlebot3_gazebo) StderrLine: {'line': b'  CMake did not find one.\n'}
+[0.377147] (turtlebot3_gazebo) StderrLine: {'line': b'\n'}
+[0.377330] (turtlebot3_gazebo) StderrLine: {'line': b'  Could not find a package configuration file provided by "gazebo" with any\n'}
+[0.377509] (turtlebot3_gazebo) StderrLine: {'line': b'  of the following names:\n'}
+[0.377686] (turtlebot3_gazebo) StderrLine: {'line': b'\n'}
+[0.377857] (turtlebot3_gazebo) StderrLine: {'line': b'    gazeboConfig.cmake\n'}
+[0.378036] (turtlebot3_gazebo) StderrLine: {'line': b'    gazebo-config.cmake\n'}
+[0.378268] (turtlebot3_gazebo) StderrLine: {'line': b'\n'}
+[0.378444] (turtlebot3_gazebo) StderrLine: {'line': b'  Add the installation prefix of "gazebo" to CMAKE_PREFIX_PATH or set\n'}
+[0.378623] (turtlebot3_gazebo) StderrLine: {'line': b'  "gazebo_DIR" to a directory containing one of the above files.  If "gazebo"\n'}
+[0.378799] (turtlebot3_gazebo) StderrLine: {'line': b'  provides a separate development package or SDK, be sure it has been\n'}
+[0.378965] (turtlebot3_gazebo) StderrLine: {'line': b'  installed.\n'}
+[0.379140] (turtlebot3_gazebo) StderrLine: {'line': b'\n'}
+[0.379316] (turtlebot3_gazebo) StderrLine: {'line': b'\x1b[0m\n'}
+[0.379505] (turtlebot3_gazebo) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[0.379773] (turtlebot3_gazebo) StdoutLine: {'line': b'See also "/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/turtlebot3_gazebo/CMakeFiles/CMakeOutput.log".\n'}
+[0.380978] (turtlebot3_gazebo) CommandEnded: {'returncode': 1}
+[0.399637] (-) TimerEvent: {}
+[0.460082] (turtlebot3_gazebo) JobEnded: {'identifier': 'turtlebot3_gazebo', 'rc': 1}
+[0.499757] (-) TimerEvent: {}
+[0.600125] (-) TimerEvent: {}
+[0.700455] (-) TimerEvent: {}
+[0.800817] (-) TimerEvent: {}
+[0.901213] (-) TimerEvent: {}
+[1.001688] (-) TimerEvent: {}
+[1.102122] (-) TimerEvent: {}
+[1.202525] (-) TimerEvent: {}
+[1.302918] (-) TimerEvent: {}
+[1.403272] (-) TimerEvent: {}
+[1.503627] (-) TimerEvent: {}
+[1.603992] (-) TimerEvent: {}
+[1.704370] (-) TimerEvent: {}
+[1.804724] (-) TimerEvent: {}
+[1.905089] (-) TimerEvent: {}
+[2.005441] (-) TimerEvent: {}
+[2.105815] (-) TimerEvent: {}
+[2.206226] (-) TimerEvent: {}
+[2.306580] (-) TimerEvent: {}
+[2.406950] (-) TimerEvent: {}
+[2.507292] (-) TimerEvent: {}
+[2.607637] (-) TimerEvent: {}
+[2.707972] (-) TimerEvent: {}
+[2.808302] (-) TimerEvent: {}
+[2.908636] (-) TimerEvent: {}
+[3.009002] (-) TimerEvent: {}
+[3.109369] (-) TimerEvent: {}
+[3.209742] (-) TimerEvent: {}
+[3.310077] (-) TimerEvent: {}
+[3.410419] (-) TimerEvent: {}
+[3.510761] (-) TimerEvent: {}
+[3.611096] (-) TimerEvent: {}
+[3.711425] (-) TimerEvent: {}
+[3.811759] (-) TimerEvent: {}
+[3.912123] (-) TimerEvent: {}
+[4.012469] (-) TimerEvent: {}
+[4.112832] (-) TimerEvent: {}
+[4.213179] (-) TimerEvent: {}
+[4.313526] (-) TimerEvent: {}
+[4.413877] (-) TimerEvent: {}
+[4.514258] (-) TimerEvent: {}
+[4.614615] (-) TimerEvent: {}
+[4.714949] (-) TimerEvent: {}
+[4.815274] (-) TimerEvent: {}
+[4.915605] (-) TimerEvent: {}
+[5.015939] (-) TimerEvent: {}
+[5.116312] (-) TimerEvent: {}
+[5.216718] (-) TimerEvent: {}
+[5.317078] (-) TimerEvent: {}
+[5.417440] (-) TimerEvent: {}
+[5.517827] (-) TimerEvent: {}
+[5.618209] (-) TimerEvent: {}
+[5.718554] (-) TimerEvent: {}
+[5.818915] (-) TimerEvent: {}
+[5.919282] (-) TimerEvent: {}
+[6.019634] (-) TimerEvent: {}
+[6.119991] (-) TimerEvent: {}
+[6.220339] (-) TimerEvent: {}
+[6.320707] (-) TimerEvent: {}
+[6.421074] (-) TimerEvent: {}
+[6.521446] (-) TimerEvent: {}
+[6.621793] (-) TimerEvent: {}
+[6.722185] (-) TimerEvent: {}
+[6.822587] (-) TimerEvent: {}
+[6.922944] (-) TimerEvent: {}
+[7.023280] (-) TimerEvent: {}
+[7.123608] (-) TimerEvent: {}
+[7.223957] (-) TimerEvent: {}
+[7.324331] (-) TimerEvent: {}
+[7.424680] (-) TimerEvent: {}
+[7.525053] (-) TimerEvent: {}
+[7.625406] (-) TimerEvent: {}
+[7.725749] (-) TimerEvent: {}
+[7.826066] (-) TimerEvent: {}
+[7.926391] (-) TimerEvent: {}
+[8.026734] (-) TimerEvent: {}
+[8.127021] (-) TimerEvent: {}
+[8.227362] (-) TimerEvent: {}
+[8.327725] (-) TimerEvent: {}
+[8.428098] (-) TimerEvent: {}
+[8.528436] (-) TimerEvent: {}
+[8.628779] (-) TimerEvent: {}
+[8.729106] (-) TimerEvent: {}
+[8.829456] (-) TimerEvent: {}
+[8.929786] (-) TimerEvent: {}
+[9.030112] (-) TimerEvent: {}
+[9.130425] (-) TimerEvent: {}
+[9.230752] (-) TimerEvent: {}
+[9.331136] (-) TimerEvent: {}
+[9.431491] (-) TimerEvent: {}
+[9.531893] (-) TimerEvent: {}
+[9.632246] (-) TimerEvent: {}
+[9.732593] (-) TimerEvent: {}
+[9.832948] (-) TimerEvent: {}
+[9.933308] (-) TimerEvent: {}
+[10.033669] (-) TimerEvent: {}
+[10.134007] (-) TimerEvent: {}
+[10.234356] (-) TimerEvent: {}
+[10.334702] (-) TimerEvent: {}
+[10.435062] (-) TimerEvent: {}
+[10.535406] (-) TimerEvent: {}
+[10.635792] (-) TimerEvent: {}
+[10.736343] (-) TimerEvent: {}
+[10.836682] (-) TimerEvent: {}
+[10.937014] (-) TimerEvent: {}
+[11.037404] (-) TimerEvent: {}
+[11.137751] (-) TimerEvent: {}
+[11.238088] (-) TimerEvent: {}
+[11.338439] (-) TimerEvent: {}
+[11.438785] (-) TimerEvent: {}
+[11.468650] (turtlebot3_fake_node) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable turtlebot3_fake_node\x1b[0m\n'}
+[11.538901] (-) TimerEvent: {}
+[11.639286] (-) TimerEvent: {}
+[11.739678] (-) TimerEvent: {}
+[11.840121] (-) TimerEvent: {}
+[11.940479] (-) TimerEvent: {}
+[12.040838] (-) TimerEvent: {}
+[12.141171] (-) TimerEvent: {}
+[12.241480] (-) TimerEvent: {}
+[12.244114] (turtlebot3_fake_node) StdoutLine: {'line': b'[100%] Built target turtlebot3_fake_node\n'}
+[12.259629] (turtlebot3_fake_node) JobEnded: {'identifier': 'turtlebot3_fake_node', 'rc': 'SIGINT'}
+[12.271765] (turtlebot3_simulations) JobSkipped: {'identifier': 'turtlebot3_simulations'}
+[12.271850] (-) EventReactorShutdown: {}

@@ -1,0 +1,15 @@
+Terminal #1
+ros2 run turtlesim turtlesim_node
+
+Terminal #2
+ros2 run turtlesim turtle_teleop_key
+
+Terminal #3
+concatenate/square movement:
+ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0}}"&&ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {y: 2.0}}"&&ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: -2.0}}"&&ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {y: -2.0}}"
+
+circular motion
+ros2 topic pub --rate 1 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
+
+fix turtlebot error
+gazebo -s libgazebo_ros_init.so -s libgazebo_ros_factory.so myworld.world

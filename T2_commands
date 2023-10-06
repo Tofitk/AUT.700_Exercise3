@@ -1,0 +1,2 @@
+ros2 topic list -t
+ros2 interface show /type

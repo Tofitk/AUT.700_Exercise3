@@ -1,0 +1,1 @@
+/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/turtlebot3_simulations/ament_cmake_environment_hooks/local_setup.sh
