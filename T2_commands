@@ -1,2 +1,8 @@
 ros2 topic list -t
 ros2 interface show /type
+
+cd task2_ws/
+source install/setup.bash
+
+export TURTLEBOT3_MODEL=burger
+ros2 launch turtlebot3_gazebo empty_world.launch.py
