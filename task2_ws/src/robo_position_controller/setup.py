@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+        'robo_position_controller = robo_position_controller.robo_position_controller_node:main'
         ],
     },
 )
