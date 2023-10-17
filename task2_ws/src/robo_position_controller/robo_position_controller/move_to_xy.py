@@ -109,20 +109,23 @@ class RoboPositionController(Node):
             # first turn the robot to face the point
             # then start linear motion to the goal
             #print(f"{self.angle_to_goal_} {self.angular_velocity.z}")
-            if abs(self.angle_to_goal_) >= 0.05:
+            if abs(self.angle_to_goal_*180/3.14) >= 2:
                 # Linear velocity in the x-axis.
                 vel_msg.angular.z = self.angular_vel()
                 vel_msg.linear.x = 0.0
+                print(1)
             else: 
                 vel_msg.angular.z = 0.0
-                if abs(self.angular_velocity.z) <= 0.02:
-                    vel_msg.linear.x = self.linear_vel()
+            if abs(self.angle_to_goal_*180/3.14) <= 45:
+                vel_msg.linear.x = self.linear_vel()
+            else:
+                vel_msg.linear.x = 0.0
 
             vel_msg.linear.y = 0.0
             vel_msg.linear.z = 0.0
             vel_msg.angular.x = 0.0
             vel_msg.angular.y = 0.0
-
+            
             # Publishing our vel_msg
             self.publisher_twist_.publish(vel_msg)
             #print(f"{abs(self.angle_to_goal_ - self.yawn)} {sqrt(pow((self.goal_pose_.x - self.pose.x), 2) + pow((self.goal_pose_.y - self.pose.y), 2))}")
