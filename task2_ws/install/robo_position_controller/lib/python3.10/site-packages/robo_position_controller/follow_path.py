@@ -9,12 +9,22 @@ from math import pow, atan2, sqrt
 from rclpy.node import Node
 import time
 
+PATHS = [
+    [Pose().position(x=1,y=0,z=0),Pose().position(x=1,y=1,z=0),Pose().position(x=0,y=1,z=0),Pose().position(x=0,y=0,z=0)],
+    [Pose().position(x=1,y=1,z=0),Pose().position(x=2,y=-1,z=0),Pose().position(x=3,y=1,z=0),Pose().position(x=4,y=-1,z=0),
+     Pose().position(x=5,y=1,z=0),Pose().position(x=6,y=-1,z=0),Pose().position(x=7,y=0,z=0),Pose().position(x=0,y=0,z=0)]
+
+]
+
+
 class RoboPositionController(Node):
 
     def __init__(self):
         # Creates a node.
         super().__init__('robo_position_controller_node')
         self.moving_ = False
+        self.at_goal_ = False
+        self.path_to_follow_ = 0
 
 
         # A subscriber to the topic '/turtle1/pose'. self.update_pose is called
@@ -30,9 +40,11 @@ class RoboPositionController(Node):
         self.goal_pose_ = Pose().position
         self.angle_to_goal_ = 0
         self.distance_tolerance_ = 0.1
-        self.angle = 0
+        self.angle_tolerance_ = 0.1
+        self.goal_angle_ = 0
         self.angular_velocity = Twist().angular
         self.yawn = 0
+        self.goal_num_ = 0
 
         timer_period = 0.09  # seconds
         self.timer_twist = self.create_timer(timer_period, self.move2goal)
@@ -92,54 +104,59 @@ class RoboPositionController(Node):
             """Moves the turtle to the goal."""
 
             # Get the input from the user.
-            self.goal_pose_.x = float(input("Set your x goal: "))
-            self.goal_pose_.y = float(input("Set your y goal: "))
+            self.path_to_follow_ = int(input("Set your path to follow (1 = square, 2 = zigzag): "))
+            self.goal_num_= 0
+            self.goal_pose_ = PATHS[self.path_to_follow_][self.goal_num]
 
-            # Please, insert a number slightly greater than 0 (e.g. 0.01).
-            self.distance_tolerance_ = float(input("Set your tolerance: "))
-            self.angle_to_goal_ = self.steering_angle()-self.yawn
-            
             #print(self.euclidean_distance(goal_pose))
             self.moving_ = True
 
         if self.moving_:
-            # Porportional controller.
-            # https://en.wikipedia.org/wiki/Proportional_control
-            
-            # first turn the robot to face the point
-            # then start linear motion to the goal
-            #print(f"{self.angle_to_goal_} {self.angular_velocity.z}")
-            if abs(self.angle_to_goal_*180/3.14) >= 2:
-                # Linear velocity in the x-axis.
-                vel_msg.angular.z = self.angular_vel()
-                vel_msg.linear.x = 0.0
-                print(1)
-            else: 
-                vel_msg.angular.z = 0.0
-            if abs(self.angle_to_goal_*180/3.14) <= 45:
-                vel_msg.linear.x = self.linear_vel()
-            else:
-                vel_msg.linear.x = 0.0
+            # first we move to the goal
+            if not self.at_goal_:
+                # Porportional controller.
+                # https://en.wikipedia.org/wiki/Proportional_control
+                
+                # first turn the robot to face the point
+                # then start linear motion to the goal
+                #print(f"{self.angle_to_goal_} {self.angular_velocity.z}")
+                if abs(self.angle_to_goal_*180/3.14) >= 2:
+                    # Linear velocity in the x-axis.
+                    vel_msg.angular.z = self.angular_vel()
+                    vel_msg.linear.x = 0.0
+                else: 
+                    vel_msg.angular.z = 0.0
 
-            vel_msg.linear.y = 0.0
-            vel_msg.linear.z = 0.0
-            vel_msg.angular.x = 0.0
-            vel_msg.angular.y = 0.0
-            
-            # Publishing our vel_msg
+                if abs(self.angle_to_goal_*180/3.14) <= 45:
+                    vel_msg.linear.x = self.linear_vel()
+                else:
+                    vel_msg.linear.x = 0.0
+
+                vel_msg.linear.y = 0.0
+                vel_msg.linear.z = 0.0
+                vel_msg.angular.x = 0.0
+                vel_msg.angular.y = 0.0
+                # Publishing our vel_msg
+                #print(f"{abs(self.angle_to_goal_ - self.yawn)} {sqrt(pow((self.goal_pose_.x - self.pose.x), 2) + pow((self.goal_pose_.y - self.pose.y), 2))}")
+                if  self.euclidean_distance() <= self.distance_tolerance_:
+                    vel_msg.linear.x = 0.0
+                    vel_msg.angular.z = 0.0
+                    self.goal_num_+= 1
+                    if self.goal_num_ > len(PATHS[self.path_to_follow_]):
+                        self.moving_ = False
+                        self.at_goal_ = True
+                    else:
+                        self.goal_pose_ = PATHS[self.path_to_follow_][self.goal_num]
+
             self.publisher_twist_.publish(vel_msg)
-            #print(f"{abs(self.angle_to_goal_ - self.yawn)} {sqrt(pow((self.goal_pose_.x - self.pose.x), 2) + pow((self.goal_pose_.y - self.pose.y), 2))}")
-            if abs(self.angular_velocity.z) <= 0.05 and self.euclidean_distance() <= self.distance_tolerance_:
-                vel_msg.linear.x = 0.0
-                vel_msg.angular.z = 0.0
-                self.moving_ = False # moving is done
-
+                
         # Stopping our robot after the movement is over.
         else:
             vel_msg.linear.x = 0.0
             vel_msg.angular.z = 0.0
             self.publisher_twist_.publish(vel_msg)
             self.moving_ = False
+            self.at_goal_ = False
 
 def main(args=None):
     rclpy.init(args=args)

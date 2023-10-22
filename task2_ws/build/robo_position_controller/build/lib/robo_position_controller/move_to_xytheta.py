@@ -15,6 +15,7 @@ class RoboPositionController(Node):
         # Creates a node.
         super().__init__('robo_position_controller_node')
         self.moving_ = False
+        self.at_goal_ = False
 
 
         # A subscriber to the topic '/turtle1/pose'. self.update_pose is called
@@ -105,40 +106,61 @@ class RoboPositionController(Node):
             self.moving_ = True
 
         if self.moving_:
-            # Porportional controller.
-            # https://en.wikipedia.org/wiki/Proportional_control
-            
-            # first turn the robot to face the point
-            # then start linear motion to the goal
-            #print(f"{self.angle_to_goal_} {self.angular_velocity.z}")
-            if abs(self.angle_to_goal_*180/3.14) >= 2:
-                # Linear velocity in the x-axis.
-                vel_msg.angular.z = self.angular_vel()
-                vel_msg.linear.x = 0.0
+            # first we move to the goal
+            if not self.at_goal_:
+                # Porportional controller.
+                # https://en.wikipedia.org/wiki/Proportional_control
+                
+                # first turn the robot to face the point
+                # then start linear motion to the goal
+                #print(f"{self.angle_to_goal_} {self.angular_velocity.z}")
                 print(1)
-            else: 
-                vel_msg.angular.z = 0.0
-            vel_msg.linear.x = self.linear_vel()
+                if abs(self.angle_to_goal_*180/3.14) >= 2:
+                    # Linear velocity in the x-axis.
+                    vel_msg.angular.z = self.angular_vel()
+                    vel_msg.linear.x = 0.0
+                else: 
+                    vel_msg.angular.z = 0.0
 
-            vel_msg.linear.y = 0.0
-            vel_msg.linear.z = 0.0
-            vel_msg.angular.x = 0.0
-            vel_msg.angular.y = 0.0
+                if abs(self.angle_to_goal_*180/3.14) <= 45:
+                    vel_msg.linear.x = self.linear_vel()
+                else:
+                    vel_msg.linear.x = 0.0
 
-            # Publishing our vel_msg
-            self.publisher_twist_.publish(vel_msg)
-            #print(f"{abs(self.angle_to_goal_ - self.yawn)} {sqrt(pow((self.goal_pose_.x - self.pose.x), 2) + pow((self.goal_pose_.y - self.pose.y), 2))}")
-            if abs(self.goal_angle_-self.yawn) < self.angle_tolerance_ and self.euclidean_distance() <= self.distance_tolerance_:
+                vel_msg.linear.y = 0.0
+                vel_msg.linear.z = 0.0
+                vel_msg.angular.x = 0.0
+                vel_msg.angular.y = 0.0
+                # Publishing our vel_msg
+                #print(f"{abs(self.angle_to_goal_ - self.yawn)} {sqrt(pow((self.goal_pose_.x - self.pose.x), 2) + pow((self.goal_pose_.y - self.pose.y), 2))}")
+                if  self.euclidean_distance() <= self.distance_tolerance_:
+                    vel_msg.linear.x = 0.0
+                    vel_msg.angular.z = 0.0
+                    self.at_goal_ = True # moving to goal is done
+
+            # now we are at the goal rotate to match the desired angle
+            else:
                 vel_msg.linear.x = 0.0
-                vel_msg.angular.z = 0.0
-                self.moving_ = False # moving is done
+                if abs(self.yawn - self.goal_angle_) >= self.angle_tolerance_:
+                    # Linear velocity in the x-axis.
+                    #print(f"goal: {0.5* (self.goal_angle_-self.yawn)}")
+                    vel_msg.angular.z = 0.1* (self.goal_angle_-self.yawn)
+                    
+                else: 
+                    vel_msg.angular.z = 0.0
+                    self.moving_ = False
+                    print(self.yawn * 180/3.14159)
+                    print(2)
 
+            self.publisher_twist_.publish(vel_msg)
+                
         # Stopping our robot after the movement is over.
         else:
             vel_msg.linear.x = 0.0
             vel_msg.angular.z = 0.0
             self.publisher_twist_.publish(vel_msg)
             self.moving_ = False
+            self.at_goal_ = False
 
 def main(args=None):
     rclpy.init(args=args)

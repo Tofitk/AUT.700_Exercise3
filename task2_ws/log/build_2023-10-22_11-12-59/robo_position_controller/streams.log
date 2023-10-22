@@ -1,0 +1,32 @@
+[1.214s] Invoking command in '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/src/robo_position_controller': PYTHONPATH=/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/prefix_override:/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/robo_position_controller build --build-base /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/build install --record /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/install.log --single-version-externally-managed
+[1.543s] running egg_info
+[1.544s] writing ../../build/robo_position_controller/robo_position_controller.egg-info/PKG-INFO
+[1.544s] writing dependency_links to ../../build/robo_position_controller/robo_position_controller.egg-info/dependency_links.txt
+[1.544s] writing entry points to ../../build/robo_position_controller/robo_position_controller.egg-info/entry_points.txt
+[1.545s] writing requirements to ../../build/robo_position_controller/robo_position_controller.egg-info/requires.txt
+[1.545s] writing top-level names to ../../build/robo_position_controller/robo_position_controller.egg-info/top_level.txt
+[1.548s] reading manifest file '../../build/robo_position_controller/robo_position_controller.egg-info/SOURCES.txt'
+[1.550s] writing manifest file '../../build/robo_position_controller/robo_position_controller.egg-info/SOURCES.txt'
+[1.550s] running build
+[1.550s] running build_py
+[1.550s] copying robo_position_controller/follow_path.py -> /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/build/lib/robo_position_controller
+[1.550s] copying robo_position_controller/move_to_xytheta.py -> /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/build/lib/robo_position_controller
+[1.551s] copying robo_position_controller/move_to_xy.py -> /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/build/lib/robo_position_controller
+[1.551s] running install
+[1.552s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[1.552s]   warnings.warn(
+[1.552s] running install_lib
+[1.553s] copying /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/build/lib/robo_position_controller/follow_path.py -> /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/python3.10/site-packages/robo_position_controller
+[1.554s] copying /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/build/lib/robo_position_controller/move_to_xytheta.py -> /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/python3.10/site-packages/robo_position_controller
+[1.554s] copying /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/build/lib/robo_position_controller/move_to_xy.py -> /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/python3.10/site-packages/robo_position_controller
+[1.555s] byte-compiling /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/python3.10/site-packages/robo_position_controller/follow_path.py to follow_path.cpython-310.pyc
+[1.557s] byte-compiling /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/python3.10/site-packages/robo_position_controller/move_to_xytheta.py to move_to_xytheta.cpython-310.pyc
+[1.559s] byte-compiling /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/python3.10/site-packages/robo_position_controller/move_to_xy.py to move_to_xy.cpython-310.pyc
+[1.560s] running install_data
+[1.561s] running install_egg_info
+[1.565s] removing '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/python3.10/site-packages/robo_position_controller-0.0.0-py3.10.egg-info' (and everything under it)
+[1.565s] Copying ../../build/robo_position_controller/robo_position_controller.egg-info to /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/python3.10/site-packages/robo_position_controller-0.0.0-py3.10.egg-info
+[1.567s] running install_scripts
+[1.593s] Installing robo_position_controller script to /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/robo_position_controller
+[1.594s] writing list of installed files to '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/install.log'
+[1.623s] Invoked command in '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/src/robo_position_controller' returned '0': PYTHONPATH=/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/prefix_override:/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/install/robo_position_controller/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/robo_position_controller build --build-base /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/build install --record /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/robo_position_controller/install.log --single-version-externally-managed

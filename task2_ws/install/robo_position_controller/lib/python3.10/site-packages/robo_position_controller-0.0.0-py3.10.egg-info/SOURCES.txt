@@ -10,6 +10,7 @@ setup.py
 ../../build/robo_position_controller/robo_position_controller.egg-info/zip-safe
 resource/robo_position_controller
 robo_position_controller/__init__.py
+robo_position_controller/follow_path.py
 robo_position_controller/move_to_xy.py
 robo_position_controller/move_to_xytheta.py
 robo_position_controller/robo_postion_controller_node (copy).py
