@@ -17,6 +17,7 @@ def make_pose_position(x,y,z):
     pose.z = z
     return pose
 
+
 PATHS = [
     [make_pose_position(x=1.0,y=0.0,z=0.0),make_pose_position(x=1.0,y=1.0,z=0.0),make_pose_position(x=0.0,y=1.0,z=0.0),make_pose_position(x=0.1,y=0.1,z=0.0)],
 
@@ -114,16 +115,20 @@ class RoboPositionController(Node):
             
             self.at_goal_ = False
             self.selected_mode = int(input("What operation mode to use (1=xy, 2=xytheta, 3=path)"))
+            self.get_logger().info(f'Selected mode of operation: {self.selected_mode}')
 
             if self.selected_mode == 1 or self.selected_mode == 2:
                 # get user input for goal values, 2 mode has extra angle variables
                 self.goal_pose_.x = float(input("Set your x goal: "))
                 self.goal_pose_.y = float(input("Set your y goal: "))
                 self.distance_tolerance_ = float(input("Set your distance tolerance: "))
+                if self.selected_mode == 1:
+                    self.get_logger().info(f'Goal: x:{self.goal_pose_.x} y:{self.goal_pose_.y}')
 
                 if self.selected_mode == 2:
                     self.goal_angle_ = (3.14159/180)*float(input("Set your theta goal (deg): "))
                     self.angle_tolerance_ = float(input("Set your angle tolerance: "))
+                    self.get_logger().info(f'Goal: x:{self.goal_pose_.x} y:{self.goal_pose_.y} theta:{self.goal_angle_ }')
                 
                 self.moving_ = True
 
@@ -132,6 +137,7 @@ class RoboPositionController(Node):
                 self.path_to_follow_ = int(input("Set your path to follow (1 = square, 2 = zigzag): "))-int(1)
                 self.goal_num_= 0
                 self.goal_pose_ = PATHS[self.path_to_follow_][self.goal_num_]
+                self.get_logger().info(f'Selected path:{self.path_to_follow_+1}')
 
                 self.moving_ = True
 
@@ -168,28 +174,34 @@ class RoboPositionController(Node):
                 if  self.euclidean_distance() <= self.distance_tolerance_:
                     vel_msg.linear.x = 0.0
                     vel_msg.angular.z = 0.0
+                    self.get_logger().info(f'Goal reached: x:{self.pose_.x} y:{self.pose_.y}')
 
                     # if xy mode then this is the end of movement
                     if self.selected_mode == 1:
                         self.moving_ = False
                         self.at_goal_ = True
+                        self.get_logger().info(f'XY move completed')
                     
                     # if thetha mode then this is the end of linear motion, start of
                     # angular motion to given theta
                     elif self.selected_mode == 2:
                         self.at_goal_ = True
+                        self.get_logger().info(f'XY move completed, starting rotation to theta')
 
                     # if in path mode, check where in the path we are
                     elif self.selected_mode == 3:
                         self.goal_num_+= 1
+                        self.get_logger().info(f'Goal number:{self.goal_num_}')
 
                         # if at the end of the path, end movement
                         if self.goal_num_ > len(PATHS[self.path_to_follow_]):
+                            self.get_logger().info(f'Goals left:{len(PATHS[self.path_to_follow_]) -self.goal_num_}')
                             self.moving_ = False
                             self.at_goal_ = True
 
                         # if not at the end then pick next goal
                         else:
+                            self.get_logger().info(f'Path completed')
                             self.goal_pose_ = PATHS[self.path_to_follow_][self.goal_num_]
             
             # this is only for theta mode. handles turning to the given theta at the goal
@@ -204,6 +216,7 @@ class RoboPositionController(Node):
                 else: 
                     vel_msg.angular.z = 0.0
                     self.moving_ = False
+                    self.get_logger().info(f'Rotation completed: {self.yawn * 180/3.14159}')
                     #print(self.yawn * 180/3.14159)
 
             # Publishing our vel_msg
