@@ -3,8 +3,8 @@
 <package format="3">
   <name>robo_position_controller</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="topi@todo.todo">topi</maintainer>
+  <description>very simple robot controllers. Contains moving to point, point with specific angle, following 2 different predetermined paths'</description>
+  <maintainer email="topi.karki@tuni.fi">Topi Kärki</maintainer>
   <license>TODO: License declaration</license>
 
   <test_depend>ament_copyright</test_depend>

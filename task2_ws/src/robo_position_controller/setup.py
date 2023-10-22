@@ -13,14 +13,17 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='topi',
-    maintainer_email='topi@todo.todo',
-    description='TODO: Package description',
+    maintainer='Topi Kärki',
+    maintainer_email='topi.karki@tuni.fi',
+    description='very simple robot controllers. Contains moving to point, point with specific angle, following 2 different predetermined paths',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
         'robo_position_controller = robo_position_controller.robo_position_controller_node:main'
+        'move_xy = robo_position_controller.move_to_xy:main'
+        'move_xytheta = robo_position_controller.move_to_xytheta:main'
+        'move_path = robo_position_controller.move_to_path:main'
         ],
     },
 )
