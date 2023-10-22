@@ -104,7 +104,7 @@ class RoboPositionController(Node):
         #print(f"{atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)}")
         return atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)
 
-    def angular_vel(self, constant=0.3):
+    def angular_vel(self, constant=0.5):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
         return constant * (self.steering_angle()-self.yawn)
 
@@ -204,8 +204,7 @@ class RoboPositionController(Node):
                 else: 
                     vel_msg.angular.z = 0.0
                     self.moving_ = False
-                    print(self.yawn * 180/3.14159)
-                    print(2)
+                    #print(self.yawn * 180/3.14159)
 
             # Publishing our vel_msg
             self.publisher_twist_.publish(vel_msg)
@@ -217,9 +216,6 @@ class RoboPositionController(Node):
             self.publisher_twist_.publish(vel_msg)
             self.moving_ = False
             self.at_goal_ = False
-
-
-
 
 
 def main(args=None):
