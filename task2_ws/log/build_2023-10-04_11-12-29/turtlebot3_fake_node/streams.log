@@ -1,4 +1,0 @@
-[0.126s] Invoking command in '/home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/turtlebot3_fake_node': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/topi/Documents/AUT700_mech_robprog/exercise3/task2_ws/build/turtlebot3_fake_node -- -j4 -l4
-[0.194s] [ 50%] [32mBuilding CXX object CMakeFiles/turtlebot3_fake_node.dir/src/turtlebot3_fake_node.cpp.o[0m
-[11.468s] [100%] [32m[1mLinking CXX executable turtlebot3_fake_node[0m
-[12.244s] [100%] Built target turtlebot3_fake_node
