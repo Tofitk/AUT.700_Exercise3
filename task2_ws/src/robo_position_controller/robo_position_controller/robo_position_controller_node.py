@@ -4,10 +4,10 @@ import rclpy
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Pose
 from sensor_msgs.msg import Imu
+from std_msgs.msg import Float32
 from nav_msgs.msg  import Odometry
 from math import pow, atan2, sqrt
 from rclpy.node import Node
-import time
 
 
 def make_pose_position(x,y,z):
@@ -44,10 +44,12 @@ class RoboPositionController(Node):
 
         # Publisher which will publish to the topic '/turtle1/cmd_vel'.
         self.publisher_twist_ = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.publisher_error_ = self.create_publisher(Float32, '/pos_error', 10)
 
 
         self.pose = Pose().position
         self.goal_pose_ = Pose().position
+        self.starting_point_ = Pose().position
         self.angle_to_goal_ = 0
         self.distance_tolerance_ = 0.1
         self.angle_tolerance_ = 0.1
@@ -56,6 +58,8 @@ class RoboPositionController(Node):
         self.yawn = 0
         self.goal_num_ = 0
         self.selected_mode = 0
+        self.slope_ = 0
+        self.intercept_ = 0
 
         timer_period = 0.09  # seconds
         self.timer_twist = self.create_timer(timer_period, self.move2goal)
@@ -108,9 +112,21 @@ class RoboPositionController(Node):
     def angular_vel(self, constant=0.5):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
         return constant * (self.steering_angle()-self.yawn)
+    
+    def distance_from_line(self, xp, yp):
+    # function to calculate the distance of a point from a line 
+    # defined by 2 points (self.starting_point_ and self.goal_point_)
+    # https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line#Line_defined_by_two_points
+
+        return (abs((self.goal_pose_.x-self.starting_point_.x)*(self.starting_point_.y-yp)
+                -(self.starting_point_.x-xp)*(self.goal_pose_.y-self.starting_point_.y))
+                *sqrt(pow(self.goal_pose_.x-self.starting_point_.x,2)
+                +pow(self.goal_pose_.y-self.starting_point_.y,2)))
+
 
     def move2goal(self):
         vel_msg = Twist()
+        error_msg = Float32()
         if not self.moving_:
             
             self.at_goal_ = False
@@ -140,6 +156,12 @@ class RoboPositionController(Node):
                 self.get_logger().info(f'Selected path:{self.path_to_follow_+1}')
 
                 self.moving_ = True
+
+            if self.selected_mode in [1,2,3]:
+                self.starting_point_.x = self.pose.x
+                self.starting_point_.y = self.pose.y
+                self.get_logger().info(f'starting point: x:{self.starting_point_.x} y:{self.starting_point_.y}')
+
 
         if self.moving_:
             # first we move to the goal
@@ -174,7 +196,7 @@ class RoboPositionController(Node):
                 if  self.euclidean_distance() <= self.distance_tolerance_:
                     vel_msg.linear.x = 0.0
                     vel_msg.angular.z = 0.0
-                    self.get_logger().info(f'Goal reached: x:{self.pose_.x} y:{self.pose_.y}')
+                    self.get_logger().info(f'Goal reached: x:{self.pose.x} y:{self.pose.y}')
 
                     # if xy mode then this is the end of movement
                     if self.selected_mode == 1:
@@ -203,6 +225,10 @@ class RoboPositionController(Node):
                         else:
                             self.get_logger().info(f'Path completed')
                             self.goal_pose_ = PATHS[self.path_to_follow_][self.goal_num_]
+                
+                #calculate the distance from the line between starting point and goal
+                error_msg.data = self.distance_from_line(self.pose.x, self.pose.y)
+                self.publisher_error_.publish(error_msg)
             
             # this is only for theta mode. handles turning to the given theta at the goal
             else:
