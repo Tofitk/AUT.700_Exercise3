@@ -1,2 +1,5 @@
 *.pdf
 OneDrive_1_10-3-2023.zip
+task2_ws/log*
+task2_ws/build*
+task2_ws/install*
