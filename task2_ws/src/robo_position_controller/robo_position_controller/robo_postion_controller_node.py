@@ -9,12 +9,31 @@ from math import pow, atan2, sqrt
 from rclpy.node import Node
 import time
 
+
+def make_pose_position(x,y,z):
+    pose = Pose().position
+    pose.x = x
+    pose.y = y
+    pose.z = z
+    return pose
+
+PATHS = [
+    [make_pose_position(x=1.0,y=0.0,z=0.0),make_pose_position(x=1.0,y=1.0,z=0.0),make_pose_position(x=0.0,y=1.0,z=0.0),make_pose_position(x=0.1,y=0.1,z=0.0)],
+
+    [make_pose_position(x=1.0,y=1.0,z=0.0),make_pose_position(x=2.0,y=-1.0,z=0.0),make_pose_position(x=3.0,y=1.0,z=0.0),make_pose_position(x=4.0,y=-1.0,z=0.0),
+     make_pose_position(x=5.0,y=1.0,z=0.0),make_pose_position(x=6.0,y=-1.0,z=0.0),make_pose_position(x=7.0,y=0.0,z=0.0),make_pose_position(x=0.1,y=0.1,z=0.0)]
+
+    ]
+
+
 class RoboPositionController(Node):
 
     def __init__(self):
         # Creates a node.
         super().__init__('robo_position_controller_node')
         self.moving_ = False
+        self.at_goal_ = False
+        self.path_to_follow_ = 0
 
 
         # A subscriber to the topic '/turtle1/pose'. self.update_pose is called
@@ -30,9 +49,12 @@ class RoboPositionController(Node):
         self.goal_pose_ = Pose().position
         self.angle_to_goal_ = 0
         self.distance_tolerance_ = 0.1
-        self.angle = 0
+        self.angle_tolerance_ = 0.1
+        self.goal_angle_ = 0
         self.angular_velocity = Twist().angular
         self.yawn = 0
+        self.goal_num_ = 0
+        self.selected_mode = 0
 
         timer_period = 0.09  # seconds
         self.timer_twist = self.create_timer(timer_period, self.move2goal)
@@ -82,66 +104,123 @@ class RoboPositionController(Node):
         #print(f"{atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)}")
         return atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)
 
-    def angular_vel(self, constant=1.0):
+    def angular_vel(self, constant=0.3):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
         return constant * (self.steering_angle()-self.yawn)
 
     def move2goal(self):
         vel_msg = Twist()
         if not self.moving_:
-            """Moves the turtle to the goal."""
+            
+            self.at_goal_ = False
+            self.selected_mode = int(input("What operation mode to use (1=xy, 2=xytheta, 3=path)"))
 
-            # Get the input from the user.
-            self.goal_pose_.x = float(input("Set your x goal: "))
-            self.goal_pose_.y = float(input("Set your y goal: "))
+            if self.selected_mode == 1 or self.selected_mode == 2:
+                # get user input for goal values, 2 mode has extra angle variables
+                self.goal_pose_.x = float(input("Set your x goal: "))
+                self.goal_pose_.y = float(input("Set your y goal: "))
+                self.distance_tolerance_ = float(input("Set your distance tolerance: "))
 
-            # Please, insert a number slightly greater than 0 (e.g. 0.01).
-            self.distance_tolerance_ = float(input("Set your tolerance: "))
-            self.angle_to_goal_ = self.steering_angle()
-            #print(self.euclidean_distance(goal_pose))
-            self.moving_ = True
+                if self.selected_mode == 2:
+                    self.goal_angle_ = (3.14159/180)*float(input("Set your theta goal (deg): "))
+                    self.angle_tolerance_ = float(input("Set your angle tolerance: "))
+                
+                self.moving_ = True
+
+            elif self.selected_mode == 3:
+                # Get the input from the user.
+                self.path_to_follow_ = int(input("Set your path to follow (1 = square, 2 = zigzag): "))-int(1)
+                self.goal_num_= 0
+                self.goal_pose_ = PATHS[self.path_to_follow_][self.goal_num_]
+
+                self.moving_ = True
 
         if self.moving_:
-            # Porportional controller.
-            # https://en.wikipedia.org/wiki/Proportional_control
-            
-            # first turn the robot to face the point
-            # then start linear motion to the goal
-            #print(self.angle_to_goal_ - self.yawn)
-            print(self.angle_to_goal_*180/3.14)
-            if self.euclidean_distance() >= self.distance_tolerance_ and abs(self.angle_to_goal_*180/3.14) < 10 and self.angular_velocity.z < 0.0005:
-                # Linear velocity in the x-axis.
-                vel_msg.linear.x = self.linear_vel()
-            else:
-                vel_msg.linear.x = 0.0
+            # first we move to the goal
+            if not self.at_goal_:
+                # Porportional controller.
+                # https://en.wikipedia.org/wiki/Proportional_control
+                
+                # first turn the robot to face the point
+                # then start linear motion to the goal
+                #print(f"{self.angle_to_goal_} {self.angular_velocity.z}")
 
-            vel_msg.linear.y = 0.0
-            vel_msg.linear.z = 0.0
-
-            if abs(self.angle_to_goal_*180/3.14) >= 0.7:
-                # Angular velocity in the z-axis.
-                if abs(self.angle_to_goal_*180/3.14) <=180:
+                # check if we need angular movement so that we are heading towards the goal
+                if abs(self.angle_to_goal_*180/3.14) >= 2:
                     vel_msg.angular.z = self.angular_vel()
+                else: 
+                    vel_msg.angular.z = 0.0
+                # check if the angle to goal is small enough to allow forward movement
+                if abs(self.angle_to_goal_*180/3.14) <= 45:
+                    vel_msg.linear.x = self.linear_vel()
                 else:
-                    vel_msg.angular.z = -self.angular_vel()
-            else:
-                vel_msg.angular.z = 0.0
+                    vel_msg.linear.x = 0.0
 
-            vel_msg.angular.x = 0.0
-            vel_msg.angular.y = 0.0
+                # set rest of the Twist values to = 0.0
+                vel_msg.linear.y = 0.0
+                vel_msg.linear.z = 0.0
+                vel_msg.angular.x = 0.0
+                vel_msg.angular.y = 0.0
+
+                #print(f"{abs(self.angle_to_goal_ - self.yawn)} {sqrt(pow((self.goal_pose_.x - self.pose.x), 2) + pow((self.goal_pose_.y - self.pose.y), 2))}")
+                
+                #check if we are close enough to the goal to stop linear motion
+                if  self.euclidean_distance() <= self.distance_tolerance_:
+                    vel_msg.linear.x = 0.0
+                    vel_msg.angular.z = 0.0
+
+                    # if xy mode then this is the end of movement
+                    if self.selected_mode == 1:
+                        self.moving_ = False
+                        self.at_goal_ = True
+                    
+                    # if thetha mode then this is the end of linear motion, start of
+                    # angular motion to given theta
+                    elif self.selected_mode == 2:
+                        self.at_goal_ = True
+
+                    # if in path mode, check where in the path we are
+                    elif self.selected_mode == 3:
+                        self.goal_num_+= 1
+
+                        # if at the end of the path, end movement
+                        if self.goal_num_ > len(PATHS[self.path_to_follow_]):
+                            self.moving_ = False
+                            self.at_goal_ = True
+
+                        # if not at the end then pick next goal
+                        else:
+                            self.goal_pose_ = PATHS[self.path_to_follow_][self.goal_num_]
+            
+            # this is only for theta mode. handles turning to the given theta at the goal
+            else:
+                vel_msg.linear.x = 0.0 # NO LINEAR MOTION ANYMORE
+                # not close enough to the given theta
+                if abs(self.yawn - self.goal_angle_) >= self.angle_tolerance_:
+                    # Linear velocity in the x-axis.
+                    #print(f"goal: {0.5* (self.goal_angle_-self.yawn)}")
+                    vel_msg.angular.z = 0.1* (self.goal_angle_-self.yawn)
+                # at the given theta
+                else: 
+                    vel_msg.angular.z = 0.0
+                    self.moving_ = False
+                    print(self.yawn * 180/3.14159)
+                    print(2)
 
             # Publishing our vel_msg
             self.publisher_twist_.publish(vel_msg)
-            #print(f"{abs(self.angle_to_goal_ - self.yawn)} {sqrt(pow((self.goal_pose_.x - self.pose.x), 2) + pow((self.goal_pose_.y - self.pose.y), 2))}")
-            if abs(self.angular_velocity.z) <= 0.005 and self.euclidean_distance() <= self.distance_tolerance_:
-                self.moving_ = False # moving is done
-
+                
         # Stopping our robot after the movement is over.
         else:
             vel_msg.linear.x = 0.0
             vel_msg.angular.z = 0.0
             self.publisher_twist_.publish(vel_msg)
             self.moving_ = False
+            self.at_goal_ = False
+
+
+
+
 
 def main(args=None):
     rclpy.init(args=args)
