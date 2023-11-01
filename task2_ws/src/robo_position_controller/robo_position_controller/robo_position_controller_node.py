@@ -217,14 +217,19 @@ class RoboPositionController(Node):
 
                         # if at the end of the path, end movement
                         if self.goal_num_ > len(PATHS[self.path_to_follow_]):
-                            self.get_logger().info(f'Goals left:{len(PATHS[self.path_to_follow_]) -self.goal_num_}')
+                            self.get_logger().info(f'Path completed')
                             self.moving_ = False
                             self.at_goal_ = True
 
                         # if not at the end then pick next goal
                         else:
-                            self.get_logger().info(f'Path completed')
+                            self.get_logger().info(f'Goals left:{len(PATHS[self.path_to_follow_]) -self.goal_num_}')
                             self.goal_pose_ = PATHS[self.path_to_follow_][self.goal_num_]
+                            self.starting_point_.x = self.pose.x
+                            self.starting_point_.y = self.pose.y
+                            self.get_logger().info(f'starting point: x:{self.starting_point_.x} y:{self.starting_point_.y}')
+
+
                 
                 #calculate the distance from the line between starting point and goal
                 error_msg.data = self.distance_from_line(self.pose.x, self.pose.y)
