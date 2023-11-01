@@ -5,7 +5,7 @@ from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Pose
 from sensor_msgs.msg import Imu
 from nav_msgs.msg  import Odometry
-from math import pow, atan2, sqrt
+from math import pow, atan2, sqrt, atan
 from rclpy.node import Node
 import time
 
@@ -19,7 +19,7 @@ def make_pose_position(x,y,z):
     return pose
 
 PATHS = [
-    [make_pose_position(x=1.0,y=0.0,z=0.0),make_pose_position(x=1.0,y=1.0,z=0.0),make_pose_position(x=0.0,y=1.0,z=0.0),make_pose_position(x=0.1,y=0.1,z=0.0)],
+    [make_pose_position(x=0.0,y=0.0,z=0.0),make_pose_position(x=-1.0,y=0.0,z=0.0),make_pose_position(x=2.0,y=1.0,z=0.0),make_pose_position(x=1.0,y=1.0,z=0.0)],
     [make_pose_position(x=1.0,y=1.0,z=0.0),make_pose_position(x=2.0,y=-1.0,z=0.0),make_pose_position(x=3.0,y=1.0,z=0.0),make_pose_position(x=4.0,y=-1.0,z=0.0),
      make_pose_position(x=5.0,y=1.0,z=0.0),make_pose_position(x=6.0,y=-1.0,z=0.0),make_pose_position(x=7.0,y=0.0,z=0.0),make_pose_position(x=0.1,y=0.1,z=0.0)]
 
@@ -46,6 +46,7 @@ class RoboPositionController(Node):
 
         self.pose = Pose().position
         self.goal_pose_ = Pose().position
+        self.starting_point_ = Pose().position
         self.angle_to_goal_ = 0
         self.distance_tolerance_ = 0.1
         self.angle_tolerance_ = 0.1
@@ -99,12 +100,13 @@ class RoboPositionController(Node):
 
     def steering_angle(self):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
-        #print(f"{atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)}")
+        print(f"{self.angle_to_goal_} {atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)} {self.yawn}")
         return atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)
 
     def angular_vel(self, constant=0.3):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
         return constant * (self.steering_angle()-self.yawn)
+
 
     def move2goal(self):
         vel_msg = Twist()
@@ -117,6 +119,8 @@ class RoboPositionController(Node):
             self.goal_pose_ = PATHS[self.path_to_follow_][self.goal_num_]
 
             #print(self.euclidean_distance(goal_pose))
+            self.starting_point_.x = self.pose.x
+            self.starting_point_.y = self.pose.y
             self.moving_ = True
 
         if self.moving_:
@@ -155,6 +159,9 @@ class RoboPositionController(Node):
                         self.at_goal_ = True
                     else:
                         self.goal_pose_ = PATHS[self.path_to_follow_][self.goal_num_]
+                        self.starting_point_.x = self.pose.x
+                        self.starting_point_.y = self.pose.y
+                        
 
             self.publisher_twist_.publish(vel_msg)
                 
