@@ -8,5 +8,8 @@ export TURTLEBOT3_MODEL=burger
 ros2 launch turtlebot3_gazebo empty_world.launch.py
 
 ros2 run robo_position_controller robo_position_controller_node.py
+ros2 run robo_position_controller move_to_path.py
+ros2 run robo_position_controller move_to_xy.py
+ros2 run robo_position_controller move_to_xytheta.py
 
 
