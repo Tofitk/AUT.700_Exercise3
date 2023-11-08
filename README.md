@@ -5,7 +5,7 @@ This repo contains the ROS2 workspace task2_ws for the given exercise. task2_ws 
 
 Main python script for robot position management is found under the package task2_ws/src/robo_position_controller:
 	
-	move_to_N : these files contain the functionality of the controller individually. move_to_xytheta.py only has the ability to move to a point and to a specific angle. 
+	move_to_N : these files contain the functionality of the controller individually. move_to_xytheta.py only has the ability to move to a point and to a specific angle. DO NOTE, move_to_path is used as a test bed for fixing the current moving directly down problem, so this file might not work properly (the wanted feature will still work as it should in the all functions node)
 	
 	robo_postion_controller_node.py: This contains all 3 wanted types of functionality in a single node.
 

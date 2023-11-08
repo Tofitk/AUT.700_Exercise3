@@ -80,6 +80,7 @@ class RoboPositionController(Node):
     def steering_angle(self):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
         #print(f"{atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)}")
+        print(f"{self.angle_to_goal_} {atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)} {self.yawn}")
         return atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)
 
     def angular_vel(self, constant=0.5):

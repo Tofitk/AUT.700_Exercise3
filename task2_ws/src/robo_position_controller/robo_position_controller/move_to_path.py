@@ -73,8 +73,7 @@ class RoboPositionController(Node):
         self.angular_velocity = msg.angular_velocity
         #print(msg.orientation)
         self.yawn = self.quartet_to_yawn(msg.orientation)
-        #print(f"{self.yawn} {self.angle_to_goal_}")
-        self.angle_to_goal_ = self.steering_angle()-self.yawn
+        self.steering_angle()
 
     def quartet_to_yawn(self, quartet):
         x= quartet.x
@@ -100,8 +99,16 @@ class RoboPositionController(Node):
 
     def steering_angle(self):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
-        print(f"{self.angle_to_goal_} {atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)} {self.yawn}")
-        return atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)
+        angle = atan2(self.goal_pose_.y - self.pose.y, self.goal_pose_.x - self.pose.x)
+        self.angle_to_goal_ = angle-self.yawn
+        if self.angle_to_goal_ < -3.14 or (self.angle_to_goal_ > 0 and self.angle_to_goal_ < 3.14 ):
+            # rotate clockwise (angle = pos)
+            angle = abs(angle)
+        else: #self.angle_to_goal_ > 3.14 or (self.angle_to_goal_ < 0 and self.angle_to_goal > -3.14)
+            # rotate counter clockwse (angle = neg)
+            angle = -abs(angle)
+        print(f"{self.angle_to_goal_} {self.angle_to_goal_*180/3.14} {angle} {angle*180/3.14} {self.yawn}")
+        return angle
 
     def angular_vel(self, constant=0.3):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
@@ -121,6 +128,7 @@ class RoboPositionController(Node):
             #print(self.euclidean_distance(goal_pose))
             self.starting_point_.x = self.pose.x
             self.starting_point_.y = self.pose.y
+            self.steering_angle()
             self.moving_ = True
 
         if self.moving_:
@@ -133,9 +141,7 @@ class RoboPositionController(Node):
                 # then start linear motion to the goal
                 #print(f"{self.angle_to_goal_} {self.angular_velocity.z}")
                 if abs(self.angle_to_goal_*180/3.14) >= 2:
-                    # Linear velocity in the x-axis.
                     vel_msg.angular.z = self.angular_vel()
-                    vel_msg.linear.x = 0.0
                 else: 
                     vel_msg.angular.z = 0.0
 
